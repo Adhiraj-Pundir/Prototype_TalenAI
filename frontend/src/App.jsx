@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Editor from "@monaco-editor/react";
 
-const API = "http://localhost:8001";
+const API = import.meta.env.DEV ? "http://localhost:8001" : "https://prototype-talenai.onrender.com";
 const PROBLEM_ID = "two-sum";
 
 const C = {
