@@ -1,6 +1,6 @@
 # TalentAI Prototype
 
-TalentAI is a code evaluation prototype that uses the Gemini AI model to evaluate candidate code submissions and provide HR-friendly recommendations (Pass/No-Pass) along with detailed feedback.
+TalentAI is a code evaluation prototype that uses the OpenRouter API (LLM) to evaluate candidate code submissions and provide HR-friendly recommendations (Pass/No-Pass) along with detailed feedback.
 
 ## Project Structure
 
@@ -12,7 +12,7 @@ This repository is split into two parts:
 
 - Python 3.10+
 - Node.js 18+
-- A valid [Google Gemini API Key](https://aistudio.google.com/api-keys)
+- A valid [OpenRouter API Key](https://openrouter.ai/keys)
 
 ## Running Locally
 
@@ -30,8 +30,8 @@ source venv/bin/activate
 # Install dependencies
 pip install -r requirements.txt
 
-# Set your Gemini API key in the .env file
-echo "GEMINI_API_KEY=your_actual_key_here" > .env
+# Set your OpenRouter API key in the .env file
+echo "OPENROUTER_API_KEY=your_actual_key_here" > .env
 
 # Run the backend
 uvicorn main:app --host 127.0.0.1 --port 8001 --reload
@@ -57,7 +57,7 @@ npm run dev
 
 - **Problem Selection**: Choose from multiple pre-defined coding challenges (e.g., Two Sum, Palindrome Number, Valid Anagram).
 - **Code Execution Engine**: Safely executes Python code against pre-defined test cases using `eval()` and `exec()` locally.
-- **AI Evaluation**: The Gemini AI evaluates the executed code and its test results to provide a structured, confident recommendation for hiring managers.
+- **AI Evaluation**: The AI evaluates the executed code and its test results to provide a structured, confident recommendation for hiring managers.
 
 ## Deployment
 
