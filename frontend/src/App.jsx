@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Editor from "@monaco-editor/react";
 
 const API = import.meta.env.DEV ? "http://localhost:8001" : "https://prototype-talenai.onrender.com";
-const PROBLEM_ID = "two-sum";
 
 const C = {
   bg: "#0d1117",
@@ -17,22 +16,38 @@ const C = {
 };
 
 export default function App() {
+  const [problemsList, setProblemsList] = useState([]);
+  const [selectedProblemId, setSelectedProblemId] = useState("two-sum");
   const [problem, setProblem] = useState(null);
-  const [showHint, setShowHint] = useState(false);
   const [code, setCode] = useState("");
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch(`${API}/problems/${PROBLEM_ID}`)
+    fetch(`${API}/problems`)
+      .then((r) => r.json())
+      .then((list) => {
+        setProblemsList(list);
+        if (list.length > 0 && !selectedProblemId) {
+          setSelectedProblemId(list[0].id);
+        }
+      })
+      .catch(() => setError("Backend not reachable. Is FastAPI running on :8000?"));
+  }, []);
+
+  useEffect(() => {
+    if (!selectedProblemId) return;
+    fetch(`${API}/problems/${selectedProblemId}`)
       .then((r) => r.json())
       .then((p) => {
         setProblem(p);
         setCode(p.starter_code);
+        setResult(null);
+        setError(null);
       })
-      .catch(() => setError("Backend not reachable. Is FastAPI running on :8000?"));
-  }, []);
+      .catch(() => setError("Failed to load problem details."));
+  }, [selectedProblemId]);
 
   async function evaluate() {
     setLoading(true);
@@ -42,7 +57,7 @@ export default function App() {
       const res = await fetch(`${API}/evaluate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ problem_id: PROBLEM_ID, language: "python", code }),
+        body: JSON.stringify({ problem_id: selectedProblemId, language: "python", code }),
       });
       if (!res.ok) throw new Error((await res.json()).detail || "Request failed");
       setResult(await res.json());
@@ -59,56 +74,28 @@ export default function App() {
 
       {/* LEFT: problem */}
       <div style={{ width: "34%", padding: 24, overflowY: "auto", borderRight: `1px solid ${C.border}` }}>
-        <div style={{ fontSize: 12, color: C.accent, letterSpacing: 1, textTransform: "uppercase" }}>
-          TalentAI · Technical Screen
-        </div>
-        <h1 style={{ fontSize: 22, margin: "8px 0 12px" }}>{problem?.title ?? "Loading…"}</h1>
-        
-        {problem?.hint && (
-          <div style={{ marginBottom: 16 }}>
-            <button
-              onClick={() => setShowHint(!showHint)}
+        <div style={{ fontSize: 12, color: C.accent, letterSpacing: 1, textTransform: "uppercase", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <span>TalentAI · Technical Screen</span>
+          {problemsList.length > 0 && (
+            <select
+              value={selectedProblemId}
+              onChange={(e) => setSelectedProblemId(e.target.value)}
               style={{
-                background: showHint ? C.accent : "#1f2937",
-                color: showHint ? "#0d1117" : "#e6edf3",
-                border: `1px solid ${C.border}`,
-                borderRadius: 6,
-                padding: "6px 12px",
-                fontSize: 12,
-                fontWeight: 600,
-                cursor: "pointer",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 6
+                background: C.panel, color: C.text, border: `1px solid ${C.border}`,
+                padding: "4px 8px", borderRadius: 4, outline: "none", cursor: "pointer"
               }}
             >
-              💡 Hint
-            </button>
-            {showHint && (
-              <div style={{
-                marginTop: 10,
-                padding: 12,
-                background: "#1f2937",
-                border: `1px solid ${C.border}`,
-                borderRadius: 6,
-                fontSize: 13,
-                color: C.warn,
-                lineHeight: 1.5
-              }}>
-                {problem.hint}
-              </div>
-            )}
-          </div>
-        )}
-
-        <div 
-          style={{ 
-            color: C.muted, 
-            lineHeight: 1.6, 
-            fontSize: 14 
-          }}
-          dangerouslySetInnerHTML={{ __html: problem?.description ?? "" }}
-        />
+              {problemsList.map(p => (
+                <option key={p.id} value={p.id}>{p.title}</option>
+              ))}
+            </select>
+          )}
+        </div>
+        <h1 style={{ fontSize: 22, margin: "16px 0 16px" }}>{problem?.title ?? "Loading…"}</h1>
+        <pre style={{ whiteSpace: "pre-wrap", color: C.muted, lineHeight: 1.6, fontSize: 14,
+          fontFamily: "inherit" }}>
+          {problem?.description}
+        </pre>
       </div>
 
       {/* RIGHT: editor + results */}

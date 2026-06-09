@@ -11,37 +11,12 @@ PROBLEMS = {
         "title": "Two Sum",
         "function_name": "two_sum",
         "description": (
-            "<p>Given an array of integers <code>nums</code> and an integer <code>target</code>, "
-            "return <em>indices of the two numbers such that they add up to <code>target</code></em>.</p>"
-            "<p>You may assume that each input would have <strong>exactly one solution</strong>, "
-            "and you may not use the <em>same</em> element twice.</p>"
-            "<p>You can return the answer in any order.</p>"
-            "<div style='margin-top: 20px;'><strong>Example 1:</strong></div>"
-            "<blockquote style='margin: 8px 0; padding: 8px 12px; background: #1f2937; border-left: 4px solid #30363d; border-radius: 4px;'>"
-            "<strong>Input:</strong> nums = [2,7,11,15], target = 9<br/>"
-            "<strong>Output:</strong> [0,1]<br/>"
-            "<strong>Explanation:</strong> Because nums[0] + nums[1] == 9, we return [0, 1]."
-            "</blockquote>"
-            "<div style='margin-top: 16px;'><strong>Example 2:</strong></div>"
-            "<blockquote style='margin: 8px 0; padding: 8px 12px; background: #1f2937; border-left: 4px solid #30363d; border-radius: 4px;'>"
-            "<strong>Input:</strong> nums = [3,2,4], target = 6<br/>"
-            "<strong>Output:</strong> [1,2]"
-            "</blockquote>"
-            "<div style='margin-top: 16px;'><strong>Example 3:</strong></div>"
-            "<blockquote style='margin: 8px 0; padding: 8px 12px; background: #1f2937; border-left: 4px solid #30363d; border-radius: 4px;'>"
-            "<strong>Input:</strong> nums = [3,3], target = 6<br/>"
-            "<strong>Output:</strong> [0,1]"
-            "</blockquote>"
-            "<div style='margin-top: 20px; font-weight: bold;'>Constraints:</div>"
-            "<ul style='margin-top: 6px; padding-left: 20px;'>"
-            "<li><code>2 &lt;= nums.length &lt;= 10<sup>4</sup></code></li>"
-            "<li><code>-10<sup>9</sup> &lt;= nums[i] &lt;= 10<sup>9</sup></code></li>"
-            "<li><code>-10<sup>9</sup> &lt;= target &lt;= 10<sup>9</sup></code></li>"
-            "<li><strong>Only one valid answer exists.</strong></li>"
-            "</ul>"
-            "<div style='margin-top: 20px;'><strong>Follow-up:</strong> Can you come up with an algorithm that is less than <code>O(n<sup>2</sup>)</code> time complexity?</div>"
+            "Given a list of integers `nums` and an integer `target`, return the "
+            "indices of the two numbers that add up to target.\n\n"
+            "Return the indices as a list [i, j] with i < j. Assume exactly one "
+            "valid answer exists, and you may not use the same element twice.\n\n"
+            "Example: nums=[2,7,11,15], target=9  ->  [0, 1]"
         ),
-        "hint": "Try using a hash map to store the index of each number as you traverse the array. For each number, check if its complement (target - number) already exists in the hash map.",
         "starter_code": (
             "def two_sum(nums, target):\n"
             "    # your code here\n"
@@ -53,6 +28,54 @@ PROBLEMS = {
             {"name": "duplicates",   "args": [[3, 3], 6],              "expected": [0, 1]},
             {"name": "negatives",    "args": [[-1, -2, -3, -4], -6],   "expected": [1, 3]},
             {"name": "large-span",   "args": [[0, 4, 3, 0], 0],        "expected": [0, 3]},
+        ],
+    },
+    "palindrome-number": {
+        "id": "palindrome-number",
+        "title": "Palindrome Number",
+        "function_name": "is_palindrome",
+        "description": (
+            "Given an integer `x`, return true if `x` is a palindrome, and false otherwise.\n\n"
+            "An integer is a palindrome when it reads the same forward and backward.\n\n"
+            "Example 1: x = 121 -> true\n"
+            "Example 2: x = -121 -> false (From left to right, it reads -121. From right to left, it becomes 121-.)\n"
+            "Example 3: x = 10 -> false\n"
+        ),
+        "starter_code": (
+            "def is_palindrome(x):\n"
+            "    # your code here\n"
+            "    pass\n"
+        ),
+        "test_cases": [
+            {"name": "positive-palindrome",  "args": [121],    "expected": True},
+            {"name": "negative",             "args": [-121],   "expected": False},
+            {"name": "ends-with-zero",       "args": [10],     "expected": False},
+            {"name": "zero",                 "args": [0],      "expected": True},
+            {"name": "large-palindrome",     "args": [12321],  "expected": True},
+        ],
+    },
+    "valid-anagram": {
+        "id": "valid-anagram",
+        "title": "Valid Anagram",
+        "function_name": "is_anagram",
+        "description": (
+            "Given two strings `s` and `t`, return true if `t` is an anagram of `s`, and false otherwise.\n\n"
+            "An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, "
+            "typically using all the original letters exactly once.\n\n"
+            "Example 1: s = 'anagram', t = 'nagaram' -> true\n"
+            "Example 2: s = 'rat', t = 'car' -> false\n"
+        ),
+        "starter_code": (
+            "def is_anagram(s, t):\n"
+            "    # your code here\n"
+            "    pass\n"
+        ),
+        "test_cases": [
+            {"name": "basic-true",     "args": ["anagram", "nagaram"],  "expected": True},
+            {"name": "basic-false",    "args": ["rat", "car"],          "expected": False},
+            {"name": "length-diff",    "args": ["a", "ab"],             "expected": False},
+            {"name": "empty",          "args": ["", ""],                "expected": True},
+            {"name": "same-letters",   "args": ["aabb", "bbaa"],        "expected": True},
         ],
     }
 }
