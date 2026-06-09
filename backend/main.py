@@ -27,7 +27,7 @@ def problem_detail(problem_id: str):
     p = get_problem(problem_id)
     if not p:
         raise HTTPException(404, "Unknown problem")
-    return {k: p[k] for k in ("id", "title", "description", "function_name", "starter_code")}
+    return {k: p[k] for k in ("id", "title", "description", "function_name", "starter_code", "hint")}
 
 
 @app.post("/evaluate", response_model=Evaluation)

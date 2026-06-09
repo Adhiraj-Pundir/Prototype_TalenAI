@@ -18,6 +18,7 @@ const C = {
 
 export default function App() {
   const [problem, setProblem] = useState(null);
+  const [showHint, setShowHint] = useState(false);
   const [code, setCode] = useState("");
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -61,11 +62,53 @@ export default function App() {
         <div style={{ fontSize: 12, color: C.accent, letterSpacing: 1, textTransform: "uppercase" }}>
           TalentAI · Technical Screen
         </div>
-        <h1 style={{ fontSize: 22, margin: "8px 0 16px" }}>{problem?.title ?? "Loading…"}</h1>
-        <pre style={{ whiteSpace: "pre-wrap", color: C.muted, lineHeight: 1.6, fontSize: 14,
-          fontFamily: "inherit" }}>
-          {problem?.description}
-        </pre>
+        <h1 style={{ fontSize: 22, margin: "8px 0 12px" }}>{problem?.title ?? "Loading…"}</h1>
+        
+        {problem?.hint && (
+          <div style={{ marginBottom: 16 }}>
+            <button
+              onClick={() => setShowHint(!showHint)}
+              style={{
+                background: showHint ? C.accent : "#1f2937",
+                color: showHint ? "#0d1117" : "#e6edf3",
+                border: `1px solid ${C.border}`,
+                borderRadius: 6,
+                padding: "6px 12px",
+                fontSize: 12,
+                fontWeight: 600,
+                cursor: "pointer",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 6
+              }}
+            >
+              💡 Hint
+            </button>
+            {showHint && (
+              <div style={{
+                marginTop: 10,
+                padding: 12,
+                background: "#1f2937",
+                border: `1px solid ${C.border}`,
+                borderRadius: 6,
+                fontSize: 13,
+                color: C.warn,
+                lineHeight: 1.5
+              }}>
+                {problem.hint}
+              </div>
+            )}
+          </div>
+        )}
+
+        <div 
+          style={{ 
+            color: C.muted, 
+            lineHeight: 1.6, 
+            fontSize: 14 
+          }}
+          dangerouslySetInnerHTML={{ __html: problem?.description ?? "" }}
+        />
       </div>
 
       {/* RIGHT: editor + results */}
