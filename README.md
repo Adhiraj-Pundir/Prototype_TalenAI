@@ -6,7 +6,8 @@ TalentAI is a code evaluation prototype that uses the OpenRouter API (LLM) to ev
 
 This repository is split into two parts:
 - **`backend/`**: A FastAPI application that handles code execution and AI evaluation.
-- **`frontend/`**: A React-based UI that includes a code editor and displays the problem description and evaluation results.
+- **`frontend/`**: A React-based
+  UI that includes a code editor and displays the problem description and evaluation results.
 
 ## Prerequisites
 
