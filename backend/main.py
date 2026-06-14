@@ -6,6 +6,7 @@ from problems import PROBLEMS, get_problem
 from executor import run_python
 from evaluator import evaluate
 
+
 app = FastAPI(title="TalentAI — Code Evaluation Prototype")
 
 # Open CORS for local dev. Lock this down before integrating with TalentAI.
